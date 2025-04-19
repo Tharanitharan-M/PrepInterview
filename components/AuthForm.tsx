@@ -4,26 +4,26 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import {
-  Form
-} from "@/components/ui/form";
+import { Form } from "@/components/ui/form";
 
 import React from "react";
 import Link from "next/link";
 import { toast } from "sonner";
 import FormField from "@/components/FormField";
-
+import { useRouter } from "next/navigation";
 
 const authFormSchema = (type: FormType) => {
   return z.object({
-    name: type === "sign-up" ? z.string().min(2).max(50) : z.string().optional(),
+    name:
+      type === "sign-up" ? z.string().min(2).max(50) : z.string().optional(),
     email: z.string().email(),
     password: z.string().min(8),
   });
-}
+};
 
 const AuthForm = ({ type }: { type: FormType }) => {
-    const formSchema = authFormSchema(type);
+  const router = useRouter();
+  const formSchema = authFormSchema(type);
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -38,9 +38,11 @@ const AuthForm = ({ type }: { type: FormType }) => {
   function onSubmit(values: z.infer<typeof formSchema>) {
     try {
       if (type === "sign-in") {
-        console.log("sign in", values);
+        toast.success("Signed in successfully");
+        router.push("/");
       } else {
-        console.log("sign up", values);
+        toast.success("Signed up successfully, Please sign in");
+        router.push("/sign-in");
       }
     } catch (error) {
       console.error(error);
@@ -59,8 +61,11 @@ const AuthForm = ({ type }: { type: FormType }) => {
         </div>
         <h3>Practice job interview with AI</h3>
 
-        <Form {...form}> 
-          <form onSubmit={form.handleSubmit(onSubmit)} className="w-full space-y-6 mt-4 form">
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="w-full space-y-6 mt-4 form"
+          >
             {!isSignIn && (
               <FormField
                 control={form.control}
@@ -71,25 +76,30 @@ const AuthForm = ({ type }: { type: FormType }) => {
               />
             )}
             <FormField
-                control={form.control}
-                name="email"
-                label="Email"
-                placeholder="Your email address"
-                type="email"
-              />
+              control={form.control}
+              name="email"
+              label="Email"
+              placeholder="Your email address"
+              type="email"
+            />
             <FormField
-                control={form.control}
-                name="password"
-                label="Password"
-                placeholder="Enter your password"
-                type="password"
-              />
-            <Button className="btn" type="submit">{isSignIn ? "Sign In" : "Create Account"}</Button>
+              control={form.control}
+              name="password"
+              label="Password"
+              placeholder="Enter your password"
+              type="password"
+            />
+            <Button className="btn" type="submit">
+              {isSignIn ? "Sign In" : "Create Account"}
+            </Button>
           </form>
         </Form>
         <p className="text-center">
           {isSignIn ? "Don't have an account?" : "Already have an account?"}
-          <Link href={isSignIn ? "/sign-up" : "/sign-in"} className="font-bold text-user-primary ml-1">
+          <Link
+            href={isSignIn ? "/sign-up" : "/sign-in"}
+            className="font-bold text-user-primary ml-1"
+          >
             {isSignIn ? "Sign Up" : "Sign In"}
           </Link>
         </p>
