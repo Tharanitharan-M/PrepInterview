@@ -1,36 +1,76 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# PrepWise: AI-Powered Mock Interview Platform
 
-## Getting Started
+PrepWise is a full-stack, real-time AI-powered platform designed to simulate mock interviews. It leverages cutting-edge technologies like Next.js, Tailwind CSS, and AI voice agents to provide a lifelike interview experience. This README provides instructions for setting up and running the application.
 
-First, run the development server:
+## Features
 
+- **Secure Authentication**: Firebase Authentication ensures secure user login and signup.
+- **AI-Powered Interview Generation**: Google Gemini AI customizes mock interviews based on user input (e.g., role, type, level, tech stack, number of questions).
+- **Real-time Mock Interviews**: VAPI Voice API enables real-time, lifelike interview simulations.
+- **Personalized Feedback**: Detailed feedback is provided after each interview, analyzing conversation transcripts and offering insights on strengths and areas for improvement.
+- **Responsive Design**: Tailwind CSS ensures a visually appealing and responsive user interface across all devices.
+- **Database Management**: Firebase Firestore stores user data, interviews, and feedback.
+
+## Technologies Used
+
+### Frontend
+- **Next.js**: Framework for building the application.
+- **React**: Component-based UI library.
+- **Tailwind CSS**: Utility-first CSS framework for styling.
+- **Shadcn UI**: Prebuilt UI components.
+- **React Hook Form**: Form management library.
+- **Zod**: Schema validation library.
+- **Next Font**: Font optimization.
+
+### Backend
+- **Next.js API Routes**: Backend logic and API endpoints.
+- **Firebase**: Authentication and Firestore for database management.
+- **VAPI (Voice API)**: Real-time voice interaction.
+- **Google Gemini AI**: AI for generating interviews and feedback.
+
+### Other
+- **@vapi/ai-web**: VAPI client library.
+- **Node.js**: JavaScript runtime.
+
+## Setup
+
+### Clone the Repository
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/Tharanitharan-M/PrepInterview
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Install Dependencies
+```bash
+npm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Set Up Environment Variables
+Create a `.env.local` file in the root directory and add your Firebase project credentials and VAPI web token. Example:
+```env
+NEXT_PUBLIC_FIREBASE_API_KEY=your_firebase_api_key
+NEXT_PUBLIC_VAPI_WEB_TOKEN=your_vapi_web_token
+# Add other required environment variables here
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Run the Development Server
+```bash
+npm run dev
+```
 
-## Learn More
+Open [http://localhost:3000](http://localhost:3000) in your browser to view the application.
 
-To learn more about Next.js, take a look at the following resources:
+## Deployment
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+This project is designed to deploy on [Vercel](https://vercel.com). Follow the Vercel deployment instructions to get started.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Contributing
 
-## Deploy on Vercel
+Contributions are welcome! If you encounter bugs or have ideas for new features, feel free to open issues or submit pull requests.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## License
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+[Specify your license here, e.g., MIT License]
+
+## Further Information
+
+Refer to the original project walkthrough video for detailed instructions on setting up APIs, implementing AI logic, designing the UI, and deploying the application.
