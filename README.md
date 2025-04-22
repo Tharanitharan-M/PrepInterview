@@ -63,6 +63,9 @@ Open [http://localhost:3000](http://localhost:3000) in your browser to view the 
 
 This project is designed to deploy on [Vercel](https://vercel.com). Follow the Vercel deployment instructions to get started.
 
+### Demo
+You can view the live demo of this project at [PrepWise Demo](https://prep-interview-five.vercel.app/).
+
 ## Contributing
 
 Contributions are welcome! If you encounter bugs or have ideas for new features, feel free to open issues or submit pull requests.
