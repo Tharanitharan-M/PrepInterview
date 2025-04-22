@@ -1,11 +1,8 @@
 import { generateText } from "ai";
 import { google } from "@ai-sdk/google";
-import { getRandomInterviewCover } from "@/lib/utils";
-import { db } from "@/firebase/admin";
 
-export async function GET() {
-  return Response.json({ sucess: true, data: "THANK YOU" }, { status: 200 });
-}
+import { db } from "@/firebase/admin";
+import { getRandomInterviewCover } from "@/lib/utils";
 
 export async function POST(request: Request) {
   const { type, role, level, techstack, amount, userid } = await request.json();
@@ -23,13 +20,15 @@ export async function POST(request: Request) {
         The questions are going to be read by a voice assistant so do not use "/" or "*" or any other special characters which might break the voice assistant.
         Return the questions formatted like this:
         ["Question 1", "Question 2", "Question 3"]
+        
+        Thank you! <3
     `,
     });
 
     const interview = {
-      role,
-      type,
-      level,
+      role: role,
+      type: type,
+      level: level,
       techstack: techstack.split(","),
       questions: JSON.parse(questions),
       userId: userid,
@@ -38,13 +37,15 @@ export async function POST(request: Request) {
       createdAt: new Date().toISOString(),
     };
 
-    await db.collection("interviews").doc().set(interview);
+    await db.collection("interviews").add(interview);
+
     return Response.json({ success: true }, { status: 200 });
   } catch (error) {
-    console.error(error);
-    return Response.json(
-      { success: false, message: "Failed to generate interview" },
-      { status: 500 }
-    );
+    console.error("Error:", error);
+    return Response.json({ success: false, error: error }, { status: 500 });
   }
+}
+
+export async function GET() {
+  return Response.json({ success: true, data: "Thank you!" }, { status: 200 });
 }
