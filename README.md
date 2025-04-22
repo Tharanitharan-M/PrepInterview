@@ -36,7 +36,7 @@ PrepWise is a full-stack, real-time AI-powered platform designed to simulate moc
 
 ### Clone the Repository
 ```bash
-git clone https://github.com/Tharanitharan-M/PrepInterview
+git clone https://github.com/Tharanitharan-M/PrepWise
 ```
 
 ### Install Dependencies
@@ -64,7 +64,7 @@ Open [http://localhost:3000](http://localhost:3000) in your browser to view the 
 This project is designed to deploy on [Vercel](https://vercel.com). Follow the Vercel deployment instructions to get started.
 
 ### Demo
-You can view the live demo of this project at [PrepWise Demo](https://prep-interview-five.vercel.app/).
+You can view the live demo of this project at [PrepWise Demo](https://prep-wise-one-mu.vercel.app/).
 
 ## Contributing
 
