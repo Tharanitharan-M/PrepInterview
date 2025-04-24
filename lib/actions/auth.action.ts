@@ -26,7 +26,7 @@ export async function setSessionCookie(idToken: string) {
 }
 
 export async function signUp(params: SignUpParams) {
-  const { uid, name, email, photoURL } = params;
+  const { uid, name, email } = params;
 
   try {
     // check if user exists in db
@@ -37,14 +37,13 @@ export async function signUp(params: SignUpParams) {
         message: "User already exists. Please sign in.",
       };
 
-    // save user to db with only defined fields
-    const userData = {
+    // save user to db
+    await db.collection("users").doc(uid).set({
       name,
       email,
-      ...(photoURL && { photoURL }), // only include photoURL if it's defined
-    };
-
-    await db.collection("users").doc(uid).set(userData);
+      // profileURL,
+      // resumeURL,
+    });
 
     return {
       success: true,
@@ -69,7 +68,7 @@ export async function signUp(params: SignUpParams) {
 }
 
 export async function signIn(params: SignInParams) {
-  const { email, idToken, photoURL, displayName } = params;
+  const { email, idToken } = params;
 
   try {
     const userRecord = await auth.getUserByEmail(email);
@@ -79,34 +78,10 @@ export async function signIn(params: SignInParams) {
         message: "User does not exist. Create an account.",
       };
 
-    // Check if user document exists in Firestore
-    const userDoc = await db.collection("users").doc(userRecord.uid).get();
-    
-    // If user document doesn't exist, create it
-    if (!userDoc.exists) {
-      await db.collection("users").doc(userRecord.uid).set({
-        name: displayName || userRecord.displayName || "User",
-        email: userRecord.email,
-        photoURL: photoURL || userRecord.photoURL || null,
-        createdAt: new Date().toISOString(),
-      });
-    } 
-    // If user document exists and we have Google profile info, update it
-    else if (photoURL || displayName) {
-      await db.collection("users").doc(userRecord.uid).update({
-        ...(photoURL && { photoURL }),
-        ...(displayName && { name: displayName }),
-      });
-    }
-
     await setSessionCookie(idToken);
-    
-    return {
-      success: true,
-      message: "Signed in successfully",
-    };
   } catch (error: any) {
-    console.error("Sign in error:", error);
+    console.log("");
+
     return {
       success: false,
       message: "Failed to log into account. Please try again.",
