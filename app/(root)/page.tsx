@@ -56,9 +56,14 @@ async function Home() {
             Practice real interview questions & get instant feedback
           </p>
 
-          <Button asChild className="btn-primary max-sm:w-full">
-            <Link href="/interview">Start an Interview</Link>
-          </Button>
+          <div className="flex flex-col sm:flex-row gap-4">
+            <Link href="/interview" className="btn-primary w-full sm:w-auto pt-2 text-center">  
+              Start Quick Interview
+            </Link>
+            <Link href="/custom-interview" className="btn-secondary w-full sm:w-auto pt-2 text-center">
+              Create Custom Interview
+            </Link>
+          </div>
         </div>
 
         <Image

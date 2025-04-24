@@ -102,3 +102,30 @@ interface InterviewFormProps {
 interface TechIconProps {
   techStack: string[];
 }
+
+interface CustomInterview {
+  id: string;
+  userId: string;
+  resumeUrl: string;
+  jobDescription: string;
+  numberOfQuestions: number;
+  difficultyLevel: string;
+  status: 'pending' | 'completed' | 'failed';
+  questions?: Question[];
+  createdAt: string;
+}
+
+interface ResumeData {
+  skills: string[];
+  experience: {
+    title: string;
+    company: string;
+    duration: string;
+    responsibilities: string[];
+  }[];
+  education: {
+    degree: string;
+    institution: string;
+    year: string;
+  }[];
+}
