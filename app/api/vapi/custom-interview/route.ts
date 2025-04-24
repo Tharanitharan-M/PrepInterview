@@ -69,16 +69,15 @@ Voice assistant guidelines:
 
     // Create the interview document
     const interview = {
-      role: jobTitle,
-      company: companyName,
-      type: "Custom Interview",
+      role: companyName ? `${companyName} - ${jobTitle}` : jobTitle,
+      type: "Custom",
       level: difficultyLevel,
       questions,
-      userId: userId,
+      userId,
       finalized: true,
-      coverImage: getRandomInterviewCover(),
-      createdAt: new Date().toISOString(),
+      coverImage: "/logo.svg",
       techstack: [],
+      createdAt: new Date().toISOString(),
     };
 
     const interviewRef = await db.collection("interviews").add(interview);
