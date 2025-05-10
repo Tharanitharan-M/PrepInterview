@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 
 import { cn } from "@/lib/utils";
@@ -35,6 +35,7 @@ const Agent = ({
   const [messages, setMessages] = useState<SavedMessage[]>([]);
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [lastMessage, setLastMessage] = useState<string>("");
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
     const onCallStart = () => {
@@ -115,6 +116,30 @@ const Agent = ({
     }
   }, [messages, callStatus, feedbackId, interviewId, router, type, userId]);
 
+  useEffect(() => {
+    // Set up video stream when component mounts
+    const setupVideo = async () => {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+        if (videoRef.current) {
+          videoRef.current.srcObject = stream;
+        }
+      } catch (error) {
+        console.error("Error accessing camera:", error);
+      }
+    };
+
+    setupVideo();
+
+    // Clean up video stream when component unmounts
+    return () => {
+      if (videoRef.current?.srcObject) {
+        const stream = videoRef.current.srcObject as MediaStream;
+        stream.getTracks().forEach(track => track.stop());
+      }
+    };
+  }, []);
+
   const handleCall = async () => {
     setCallStatus(CallStatus.CONNECTING);
 
@@ -166,15 +191,17 @@ const Agent = ({
 
         {/* User Profile Card */}
         <div className="card-border">
-          <div className="card-content">
-            <Image
-              src={photoURL || "/user-avatar.png"}
-              alt="profile-image"
-              width={539}
-              height={539}
-              className="rounded-full object-cover size-[120px]"
+          <div className="card-content p-0 relative h-full w-full flex justify-center items-end overflow-hidden">
+            <video
+              ref={videoRef}
+              autoPlay
+              playsInline
+              muted
+              className="absolute inset-0 w-full h-full object-cover"
             />
-            <h3>{userName}</h3>
+            <div className="absolute bottom-0 left-0 w-full bg-black/60 text-white text-center py-3 z-10">
+              <h3 className="text-lg font-semibold">{userName}</h3>
+            </div>
           </div>
         </div>
       </div>
